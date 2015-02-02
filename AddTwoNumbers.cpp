@@ -55,7 +55,7 @@ public:
 	{
 		ListNode* lst = new ListNode(0);
 		ListNode* fistNode = lst;
-		for (int i = 0; i < list.size(); ++i)
+		for (size_t i = 0; i<list.size(); ++i)
 		{
 			lst->val = list.at(i);
 			if (list.size() == i+1)
@@ -77,7 +77,7 @@ public:
 int main()
 {
 	Solution s;
-	// vector<int> 初始化方法 c++11 
+	// vector<int> Initialization list c++11 
 	vector<int> a{2,4,3};
 //	a.push_back(2);
 //	a.push_back(4);
