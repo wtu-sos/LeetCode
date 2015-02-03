@@ -3,37 +3,67 @@
 #include<algorithm>
 using namespace std;
 
+struct node{
+	int value;
+	int index;
+	node(int val, int idx):value(val), index(idx){}
+};
+
+bool compare(node n1, node n2){
+	return n1.value < n2.value;
+}
+
 class Solution {
 public:
     vector<int> twoSum(vector<int> &numbers, int target) {
-		vector<int> tmp;
+			vector<node> tmp;
 		vector<int> result;
-        for (vector<int>::iterator it = numbers.begin(); it != numbers.end(); ++it)
-		{
-			if (*it <= target)
-				tmp.push_back(*it);
+		for (size_t idx = 0; idx < numbers.size(); ++idx) { 
+			tmp.push_back(node(numbers.at(idx), idx+1));
 		}
-		sort(tmp.begin(), tmp.end());
-		for (int i = 0; i < tmp.size(); ++i)
-			for (int j = i; j < tmp.size(); ++j)
+
+		sort(tmp.begin(), tmp.end(), compare);
+		int i = 0, j = tmp.size()-1;
+		while (i < j)
+		{
+			int sum = tmp[i].value + tmp[j].value;
+			if (sum == target)
 			{
-				if (tmp.at(i) + tmp.at(j) == target)
-				{
-					cout << "index1 = " << i+1 << "; index2 = " << j+1 << endl;
-					result.push_back(i);
-					result.push_back(j);
-					return result;
-				}
+			    if (tmp[i].index < tmp[j].index) {
+			    	result.push_back(tmp[i].index);
+			    	result.push_back(tmp[j].index);
+		    	} else {
+                    result.push_back(tmp[j].index);
+                    result.push_back(tmp[i].index);
+		    	}
+				return result;
 			}
+
+			if (sum > target)
+				j--;
+			else 
+				i++;
+		}
 		return result;
-    }
+	}
 };
 
 int main()
 {
 	Solution a;
-	vector<int> inputVec {2, 7, 11, 15};
-	int target = 9;
-	a.twoSum(inputVec, target);
+	int input[] = {3,2,4};
+	vector<int> inputVec; /* {-3, 7, 3, 15};*/
+	for (int i= 0; i < sizeof(input)/sizeof(int); ++i)
+	{
+		inputVec.push_back(input[i]);
+	}
+	int target = 6;
+	vector<int> idx = a.twoSum(inputVec, target);
+
+	for (vector<int>::iterator it = idx.begin(); it != idx.end(); ++it)
+		cout << *it << endl;
+	
+	cin >> target; 
 	return 0;
 }
+
