@@ -1,2 +1,3 @@
-# MyLearnAndTry
+# leetcode 
+
 just for a memo
